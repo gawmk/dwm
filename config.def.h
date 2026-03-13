@@ -82,15 +82,18 @@ static const char *brtup[] = CMD("brightnessctl s +10%");
 static const char *brtdown[] = CMD("brightnessctl s 10%-");
 
 // volume
-static const char *volup[] = CMD("wpctl set-volume --limit 1 @DEFAULT_AUDIO_SINK@ 5%+");
-static const char *voldown[] = CMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-");
-static const char *volmute[] = CMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle");
+static const char *volup[] = CMD("wpctl set-volume --limit 1 @DEFAULT_AUDIO_SINK@ 5%+ && pkill -RTMIN+1 dwmblocks");
+static const char *voldown[] = CMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 dwmblocks");
+static const char *volmute[] = CMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 dwmblocks");
 
+static const char *sys[] = { "/home/gawmk/dotfiles/scripts/x11/sys", NULL };
+static const char *ss[] = { "/home/gawmk/dotfiles/scripts/x11/screenshot", NULL };
 
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_c,      spawn,          {.v = ss } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -103,7 +106,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_f,      fullscreen,     {0} },
 	{ MODKEY|ShiftMask,             XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY|ShiftMask,             XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY|ShiftMask,             XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -123,6 +126,7 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_e,      quit,           {0} },
+	{ MODKEY|ControlMask,           XK_s,      spawn,          {.v = sys} },
 	{0,              XF86XK_MonBrightnessUp,   spawn,          {.v = brtup} },
 	{0,              XF86XK_MonBrightnessDown, spawn,          {.v = brtdown} },
 	{0,              XF86XK_AudioRaiseVolume,  spawn,          {.v = volup} },
