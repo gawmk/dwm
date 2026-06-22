@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ -f config.h ]]; then
+    rm config.h
+fi
+
+ make config.h
+ sudo make install

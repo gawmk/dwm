@@ -42,8 +42,12 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Gimp",         NULL,       NULL,       0,                 1,           -1 },
+	{ "firefox-esr",  NULL,       NULL,       1 << 0,            0,           -1 },
+	{ "Emacs",        NULL,       NULL,       1 << 1,            0,           -1 },
+	{ "thunderbird",  NULL,       NULL,       1 << 2,            0,           -1 },
+	{ "pavucontrol",  NULL,       NULL,       0,                 1,           -1 },
+	{ "iwgtk",        NULL,       NULL,       0,                 1,           -1 },
 };
 
 /* layout(s) */
