@@ -37,11 +37,13 @@ static const char *colors[][3]      = {
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
-	/* xprop(1):
-	 *	WM_CLASS(STRING) = instance, class
-	 *	WM_NAME(STRING) = title
-	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
+    /* xprop(1):
+     *	WM_CLASS(STRING) = instance, class
+     *	WM_NAME(STRING) = title
+     */
+    /* class      instance    title       tags mask     isfloating   monitor */
+        { "Steam", NULL, NULL, 0, 1, -1 },
+        { "steam", NULL, NULL, 0, 1, -1 },
 	{ "Gimp",         NULL,       NULL,       0,                 1,           -1 },
 	{ "firefox-esr",  NULL,       NULL,       1 << 0,            0,           -1 },
 	{ "Emacs",        NULL,       NULL,       1 << 1,            0,           -1 },
