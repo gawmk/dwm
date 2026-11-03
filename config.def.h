@@ -9,7 +9,7 @@ static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows sel
 static const unsigned int systrayonleft = 0;    /* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray        = 1;        /* 0 means no systray */
+static const int showsystray        = 0;        /* 0 means no systray */
 static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
 static const unsigned int gappoh    = 15;       /* horiz outer gap between windows and screen edge */
@@ -17,6 +17,9 @@ static const unsigned int gappov    = 15;       /* vert outer gap between window
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
+static const int usealtbar          = 1;        /* 1 means use non-dwm status bar */
+static const char *altbarclass      = "";       /* bar WM_CLASS; "" = any _NET_WM_WINDOW_TYPE_DOCK window */
+static const char *altbarcmd        = "";       /* bar is started from .xinitrc */
 static const char *fonts[]          = { "IosevkaComfy Nerd Font:size=14:weight=semibold" };
 static const char dmenufont[]       = "IosevkaComfy Nerd Font:size=14:weight=semibold";
 static const char col_gray1[]       = "#282828";
@@ -90,9 +93,9 @@ static const char *brtup[] = CMD("brightnessctl s +10%");
 static const char *brtdown[] = CMD("brightnessctl s 10%-");
 
 // volume
-static const char *volup[] = CMD("wpctl set-volume --limit 1 @DEFAULT_AUDIO_SINK@ 5%+ && pkill -RTMIN+1 dwmblocks");
-static const char *voldown[] = CMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 dwmblocks");
-static const char *volmute[] = CMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 dwmblocks");
+static const char *volup[] = CMD("wpctl set-volume --limit 1 @DEFAULT_AUDIO_SINK@ 5%+");
+static const char *voldown[] = CMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-");
+static const char *volmute[] = CMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle");
 
 static const char *sys[] = { "/home/gawmk/dotfiles/scripts/x11/sys", NULL };
 static const char *ss[] = { "/home/gawmk/dotfiles/scripts/x11/screenshot", NULL };
@@ -165,5 +168,23 @@ static const Button buttons[] = {
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+};
+
+static const char *ipcsockpath = "/tmp/dwm.sock";
+static IPCCommand ipccommands[] = {
+  IPCCOMMAND(  view,                1,      {ARG_TYPE_UINT}   ),
+  IPCCOMMAND(  toggleview,          1,      {ARG_TYPE_UINT}   ),
+  IPCCOMMAND(  tag,                 1,      {ARG_TYPE_UINT}   ),
+  IPCCOMMAND(  toggletag,           1,      {ARG_TYPE_UINT}   ),
+  IPCCOMMAND(  tagmon,              1,      {ARG_TYPE_UINT}   ),
+  IPCCOMMAND(  focusmon,            1,      {ARG_TYPE_SINT}   ),
+  IPCCOMMAND(  focusstack,          1,      {ARG_TYPE_SINT}   ),
+  IPCCOMMAND(  zoom,                1,      {ARG_TYPE_NONE}   ),
+  IPCCOMMAND(  incnmaster,          1,      {ARG_TYPE_SINT}   ),
+  IPCCOMMAND(  killclient,          1,      {ARG_TYPE_SINT}   ),
+  IPCCOMMAND(  togglefloating,      1,      {ARG_TYPE_NONE}   ),
+  IPCCOMMAND(  setmfact,            1,      {ARG_TYPE_FLOAT}  ),
+  IPCCOMMAND(  setlayoutsafe,       1,      {ARG_TYPE_PTR}    ),
+  IPCCOMMAND(  quit,                1,      {ARG_TYPE_NONE}   )
 };
 
