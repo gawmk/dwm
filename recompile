@@ -1,8 +1,8 @@
 #!/bin/bash
-
-if [[ -f config.h ]]; then
-    rm config.h
-fi
-
- make config.h
- sudo make install
+# rebuild from config.def.h as the current user, install as root
+set -e
+cd "$(dirname "$0")"
+make clean
+rm -f config.h
+make
+sudo make install
